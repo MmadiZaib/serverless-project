@@ -3,7 +3,6 @@ import createError from 'http-errors';
 
 
 const AWS = require('aws-sdk');
-
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 
@@ -32,7 +31,7 @@ export async function getAuctionById(id) {
 async function getAuction(event, context) {
     const { id } = event.pathParameters;
     const auction = await getAuctionById(id);
-    
+
     return {
      statusCode: 200,
      body: JSON.stringify({ auction }),
