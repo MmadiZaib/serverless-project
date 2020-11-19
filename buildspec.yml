@@ -20,8 +20,8 @@ phases:
     commands:
       - mkdir -p target/dev
       - mkdir -p target/prod
-      - serverless package --package target/dev --stage dev -v
-      - serverless package --package target/prod --stage prod -v
+      - serverless package --package target/dev --stage dev -v -r eu-west-1
+      - serverless package --package target/prod --stage prod -v eu-west-1
       - echo Build started on `date`
       - echo Building the Docker image...
     #  - docker build -t $REPOSITORY_URI:latest .
