@@ -21,6 +21,5 @@ artifacts:
     - target/**/*
     - resources/*
     - serverless.yml
-    - buildspec-dev.yml
-    - buildspec-prod.yml
+    - buildspec-deploy.yml
     - deploy.sh
