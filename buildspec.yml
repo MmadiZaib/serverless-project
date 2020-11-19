@@ -2,8 +2,15 @@ version: 0.2
 
 
 phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+    - npm install --silent --no-progress -g npm
+    - npm install --silent --no-progress -g serverless         
   pre_build:
     commands:
+      - npm install --silent --no-progress
       - echo Logging in to Amazon ECR...
       - aws --version
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
@@ -12,6 +19,10 @@ phases:
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
     commands:
+      - mkdir -p target/dev
+      - mkdir -p target/prod
+      - serverless package --package target/dev --stage dev -v
+      - serverless package --package target/prod --stage prod -v
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
@@ -26,4 +37,10 @@ phases:
       - printf '[{"name":"auction-service","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json 
 artifacts:
-    files: imagedefinitions.json
+    files: 
+    - imagedefinitions.json
+    - target/**/*
+    - resources/*
+    - serverless.yml
+    - buildspec-deploy.yml
+    - deploy.sh

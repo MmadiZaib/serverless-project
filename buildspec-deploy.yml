@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+    - npm install --silent --no-progress -g npm
+    - npm install --silent --no-progress -g serverless      
+    - npm install --silent --no-progress --save serverless-bundle
+    - npm install --silent --no-progress --save serverless-pseudo-parameters
+  build:
+    commands:
+       - bash deploy.sh
