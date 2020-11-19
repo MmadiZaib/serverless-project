@@ -27,6 +27,7 @@ async function createAuction(event, context) {
       amount: 0,
     },
     seller: email,
+    test: 'toto',
   };
 
   try {
