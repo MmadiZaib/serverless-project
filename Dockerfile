@@ -1,21 +1,20 @@
-# stage 1 - install dependencies
-FROM node:12-alpine as app-dependencies
-# label stage as intermediate
-LABEL stage=intermediate
-# copy only necessary files for dependencies install
-COPY package*.json ./
-# install dependencies
-RUN yarn install
+FROM node:carbon
 
-# stage 2 - serve app
-FROM node:12-alpine as app-build
-# change working directory
-WORKDIR /var/www/app
-# copy dependencies from previous stage
-COPY --from=app-dependencies /node_modules ./node_modules
-# copy app files
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+
+RUN npm install
+# If you are building your code for production
+# RUN npm install --only=production
+
+# Bundle app source
 COPY . .
-# expose port
-EXPOSE 3000
-# start serverless
-CMD ["yarn", "run", "serve"]
+
+EXPOSE 8080
+CMD [ "npm", "start" ]
