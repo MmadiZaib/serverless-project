@@ -12,7 +12,6 @@ phases:
 
   build:
     commands:
-       - bash deploy.sh
        - echo Build started on `date`
        - echo Building the Docker image...
        - docker build -t $REPOSITORY_URI:latest .

@@ -22,4 +22,5 @@ artifacts:
     - resources/*
     - serverless.yml
     - buildspec-deploy.yml
+    - buildspec-docker.yml
     - deploy.sh
